@@ -1,0 +1,203 @@
+/* ── Container ── */
+.chat-input-container {
+  padding: 1rem 1.5rem;
+  background-color: var(--container-background);
+  border-top: 1px solid var(--border-color);
+}
+
+.chat-input-form {
+  display: flex;
+  align-items: flex-end;
+  gap: 0.75rem;
+  width: 100%;
+  max-width: 100%;
+}
+
+/* ── Language Selector ── */
+.lang-selector-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: transparent;
+  border: 1px solid var(--border-color);
+  border-radius: 20px;
+  padding: 0 0.8rem;
+  height: 44px;
+  box-sizing: border-box;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: all 0.2s ease;
+}
+
+.lang-selector-wrapper:focus-within,
+.lang-selector-wrapper:hover {
+  border-color: #cbd5e1;
+  background-color: var(--input-background);
+}
+
+.globe-icon {
+  color: var(--text-secondary);
+  flex-shrink: 0;
+  width: 14px;
+  height: 14px;
+}
+
+.lang-selector {
+  background: none;
+  border: none;
+  outline: none;
+  font-size: 0.78rem;
+  color: var(--text-primary);
+  cursor: pointer;
+  padding: 0;
+  font-family: inherit;
+  font-weight: 500;
+}
+
+.lang-selector:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ── Text Input Wrapper ── */
+.input-wrapper {
+  flex-grow: 1;
+  background-color: var(--input-background);
+  border: 1px solid transparent;
+  border-radius: 12px;
+  padding: 10px 1rem;
+  min-height: 44px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: flex-end;
+  transition: all 0.2s ease;
+  min-width: 0; 
+}
+
+.input-wrapper:focus-within {
+  background-color: #ffffff;
+  border-color: var(--border-color);
+  box-shadow: 0 2px 10px rgba(0,0,0,0.02);
+}
+
+.message-input {
+  flex-grow: 1;
+  background: none;
+  border: none;
+  outline: none;
+  color: var(--text-primary);
+  font-size: 0.95rem;
+  font-family: inherit;
+  resize: none;
+  line-height: 24px;
+  max-height: 120px;
+  overflow-y: auto;
+  min-height: 24px;
+  padding: 0;
+}
+
+.message-input::placeholder {
+  color: #9ca3af;
+}
+
+.message-input::-webkit-scrollbar { width: 4px; }
+.message-input::-webkit-scrollbar-track { background: transparent; }
+.message-input::-webkit-scrollbar-thumb { background-color: #d1d5db; border-radius: 4px; }
+
+/* ── Shared icon button base ── */
+.send-button,
+.mic-button {
+  border: none;
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: all 0.2s ease;
+  box-sizing: border-box;
+  padding: 0;
+}
+
+/* ── Send button ── */
+.send-button {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.send-button:hover:not(:disabled) {
+  background-color: var(--button-hover);
+  transform: translateY(-1px);
+}
+
+.send-button:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.send-button:disabled {
+  background-color: #e5e7eb;
+  color: #9ca3af;
+  cursor: not-allowed;
+}
+
+/* ── Mic button ── */
+.mic-button {
+  background-color: transparent;
+  color: var(--text-secondary);
+  border: 1px solid var(--border-color);
+}
+
+.mic-button:hover:not(:disabled) {
+  background-color: var(--input-background);
+  color: var(--text-primary);
+}
+
+.mic-button.listening {
+  background-color: #fee2e2;
+  color: #ef4444;
+  border-color: #fecaca;
+  animation: mic-pulse 2s infinite cubic-bezier(0.4, 0, 0.6, 1);
+}
+
+.mic-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+@keyframes mic-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+/* ── Loader spinner ── */
+.loader {
+  animation: rotate 1.5s linear infinite;
+  width: 32px;
+  height: 32px;
+}
+
+.loader .path {
+  stroke: currentColor;
+  stroke-linecap: round;
+  animation: dash 1.5s ease-in-out infinite;
+}
+
+@keyframes rotate { 100% { transform: rotate(360deg); } }
+@keyframes dash {
+  0% { stroke-dasharray: 1, 150; stroke-dashoffset: 0; }
+  50% { stroke-dasharray: 90, 150; stroke-dashoffset: -35; }
+  100% { stroke-dasharray: 90, 150; stroke-dashoffset: -124; }
+}
+
+/* ── Mobile ── */
+@media (max-width: 768px) {
+  .chat-input-container { padding: 1rem; }
+  .chat-input-form { gap: 0.5rem; }
+  .lang-selector-wrapper { padding: 0 0.6rem; height: 40px; }
+  .lang-selector { max-width: 80px; font-size: 0.8rem; }
+  .input-wrapper { padding: 8px 0.85rem; border-radius: 10px; min-height: 40px; }
+  .message-input { font-size: 0.9rem; max-height: 100px; }
+  .send-button, .mic-button { width: 40px; height: 40px; border-radius: 8px; }
+}

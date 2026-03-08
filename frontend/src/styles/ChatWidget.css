@@ -1,0 +1,126 @@
+/* ══════════════════════════════════════════
+   ChatWidget — FAB + Floating Popup Window
+══════════════════════════════════════════ */
+
+/* ── Floating popup window ── */
+.chat-panel {
+  position: fixed;
+  bottom: 100px;
+  right: 24px;
+  width: 420px;
+  height: 580px;
+  z-index: 900;
+  border-radius: 20px;
+  /* No overflow:hidden here — the inner .chatbot-container handles clipping.
+     Keeping it off lets the absolute close button render outside the header. */
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.22), 0 4px 16px rgba(0, 0, 0, 0.1);
+
+  opacity: 0;
+  transform: scale(0.85) translateY(24px);
+  transform-origin: bottom right;
+  pointer-events: none;
+
+  transition: opacity 0.28s cubic-bezier(0.4, 0, 0.2, 1),
+              transform 0.28s cubic-bezier(0.34, 1.4, 0.64, 1);
+}
+
+.chat-panel.open {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+  pointer-events: all;
+}
+
+/* ── Floating action button ── */
+.chat-fab {
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+  z-index: 1000;
+  width: 62px;
+  height: 62px;
+  border-radius: 50%;
+  border: none;
+  background: linear-gradient(135deg, #5ea0ee 0%, #3a7bd5 100%);
+  color: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 6px 20px rgba(58, 123, 213, 0.5);
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1),
+              box-shadow 0.25s ease,
+              background 0.25s ease;
+  outline: none;
+}
+
+.chat-fab:hover {
+  transform: scale(1.1);
+  box-shadow: 0 10px 28px rgba(58, 123, 213, 0.6);
+}
+
+.chat-fab:active {
+  transform: scale(0.95);
+}
+
+.chat-fab.fab-open {
+  background: linear-gradient(135deg, #697580 0%, #4a5568 100%);
+  box-shadow: 0 6px 20px rgba(74, 85, 104, 0.45);
+}
+
+/* ── Icon crossfade inside FAB ── */
+.fab-icon {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transform: scale(0.5) rotate(-90deg);
+  transition: opacity 0.2s ease, transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+  pointer-events: none;
+}
+
+.fab-icon.visible {
+  opacity: 1;
+  transform: scale(1) rotate(0deg);
+}
+
+/* ── Pulse ring (idle state only) ── */
+.fab-pulse {
+  position: absolute;
+  width: 62px;
+  height: 62px;
+  border-radius: 50%;
+  background: rgba(94, 160, 238, 0.4);
+  animation: fab-ring 2s ease-out infinite;
+  pointer-events: none;
+}
+
+@keyframes fab-ring {
+  0%   { transform: scale(1);    opacity: 0.7; }
+  80%  { transform: scale(1.55); opacity: 0;   }
+  100% { transform: scale(1.55); opacity: 0;   }
+}
+
+/* ── Mobile: full screen popup ── */
+@media (max-width: 600px) {
+  .chat-panel {
+    bottom: 0;
+    right: 0;
+    width: 100vw;
+    height: 100vh;
+    border-radius: 0;
+    transform-origin: bottom center;
+  }
+
+  .chat-fab {
+    bottom: 20px;
+    right: 20px;
+    width: 56px;
+    height: 56px;
+  }
+
+  .fab-pulse {
+    width: 56px;
+    height: 56px;
+  }
+}

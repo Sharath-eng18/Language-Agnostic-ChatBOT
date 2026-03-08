@@ -1,0 +1,89 @@
+/* ── Message wrapper ── */
+.message-wrapper {
+  display: flex;
+  gap: 0.75rem;
+  align-items: flex-end;
+}
+
+.message-wrapper.user { justify-content: flex-end; }
+.message-wrapper.ai   { justify-content: flex-start; }
+
+/* ── Avatars ── */
+.message-avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.ai-avatar {
+  background-color: var(--primary-color);
+  color: #ffffff;
+}
+
+.user-avatar {
+  background-color: #e5e7eb;
+  color: var(--text-primary);
+}
+
+/* ── Chat bubble ── */
+.message-content {
+  max-width: 75%;
+  padding: 0.85rem 1rem;
+  position: relative;
+  word-wrap: break-word;
+}
+
+/* User messages (outgoing) */
+.message-content.user {
+  background-color: var(--bubble-outgoing-bg);
+  color: var(--bubble-outgoing-text);
+  border-radius: 12px;
+  border-bottom-right-radius: 4px;
+}
+
+/* AI messages (incoming) */
+.message-content.ai {
+  background-color: var(--bubble-incoming-bg);
+  color: var(--bubble-incoming-text);
+  border-radius: 12px;
+  border-bottom-left-radius: 4px;
+}
+
+.message-text {
+  font-size: 0.95rem;
+  line-height: 1.5;
+  white-space: pre-wrap;
+}
+
+.message-footer {
+  margin-top: 0.4rem;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.message-time {
+  font-size: 0.7rem;
+  color: var(--text-secondary);
+}
+
+/* User message timestamp */
+.message-content.user .message-time {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* ── Error messages ── */
+.message-content.error {
+  background-color: #fef2f2;
+  color: #ef4444;
+  border: 1px solid #fee2e2;
+}
+
+/* ── Mobile ── */
+@media (max-width: 768px) {
+  .message-content { max-width: 85%; padding: 0.75rem 0.9rem; }
+  .message-text    { font-size: 0.9rem; }
+}
