@@ -6,16 +6,16 @@ from dotenv import load_dotenv
 
 # --- Import the correct LangChain components ---
 from langchain_community.embeddings import HuggingFaceEmbeddings
-from langchain_community.vectorstores import FAISS
+from langchain_pinecone import PineconeVectorStore
 from langchain_huggingface import ChatHuggingFace, HuggingFaceEndpoint
 from langchain_core.messages import SystemMessage, HumanMessage
 
 # --- Configuration ---
 load_dotenv()
 HUGGINGFACE_TOKEN = os.getenv("HUGGINGFACEHUB_API_TOKEN")
+PINECONE_INDEX_NAME = os.getenv("PINECONE_INDEX_NAME")
 # Using a conversational model, as required
 REPO_ID = "moonshotai/Kimi-K2-Instruct"
-DB_FAISS_PATH = "vectorstore/db_faiss"
 
 # --- RAG Setup (Load components once at startup) ---
 try:
@@ -26,9 +26,9 @@ try:
     )
     
     # 2. Load the Vector Store (no change here)
-    print("Loading FAISS index...")
-    db = FAISS.load_local(DB_FAISS_PATH, embeddings, allow_dangerous_deserialization=True)
-    print("FAISS index loaded.")
+    print("Loading Pinecone index...")
+    db = PineconeVectorStore(index_name=PINECONE_INDEX_NAME, embedding=embeddings)
+    print("Pinecone index loaded.")
 
     # 3. Initialize the LLM as a CHAT model (This is the key change)
     llm = HuggingFaceEndpoint(
